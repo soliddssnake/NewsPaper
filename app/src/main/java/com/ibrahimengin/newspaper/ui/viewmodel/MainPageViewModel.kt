@@ -5,16 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ibrahimengin.newspaper.data.entity.Article
+import com.ibrahimengin.newspaper.data.entity.NewsResponse
 import com.ibrahimengin.newspaper.data.repo.NewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class MainPageViewModel @Inject constructor(var nRepo: NewsRepository) : ViewModel() {
     //val newsList = MutableStateFlow()
-
     private var _newsList = MutableLiveData<List<Article>>()
+    var pageNumber = 1
+    var isLoading = false
+    var hasMorePage = true
+
     val newsList : LiveData<List<Article>>
         get() = _newsList
 
@@ -23,8 +28,29 @@ class MainPageViewModel @Inject constructor(var nRepo: NewsRepository) : ViewMod
     }
 
     fun uploadArticles(){
+        isLoading = true
         viewModelScope.launch {
-            _newsList.value = nRepo.getAllNews()
+            try {
+                val articles = nRepo.getAllNews(pageNumber)
+                if (articles.isNotEmpty()) {
+                    pageNumber++
+                    _newsList.value = _newsList.value.orEmpty() + articles
+                }else {
+                    hasMorePage = false
+                }
+            }catch (_: Exception){
+
+            }finally {
+                isLoading = false
+            }
+
+
+        }
+    }
+
+    fun nextPage(){
+        if (!isLoading && hasMorePage){
+            uploadArticles()
         }
     }
 

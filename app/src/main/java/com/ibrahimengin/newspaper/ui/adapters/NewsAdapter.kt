@@ -7,20 +7,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ibrahimengin.newspaper.R
 import com.ibrahimengin.newspaper.data.entity.Article
 import com.ibrahimengin.newspaper.databinding.ItemNewsBinding
 
 class NewsAdapter : ListAdapter<Article, NewsAdapter.CardViewHolder>(ArticleDiffUtil()) {
 
-    inner class CardViewHolder(binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class CardViewHolder(binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
         var binding: ItemNewsBinding
+
         init {
             this.binding = binding
         }
     }
 
-     class ArticleDiffUtil : DiffUtil.ItemCallback<Article>() {
+    class ArticleDiffUtil : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem == newItem
         }
@@ -32,7 +34,8 @@ class NewsAdapter : ListAdapter<Article, NewsAdapter.CardViewHolder>(ArticleDiff
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: ItemNewsBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_news, parent, false)
+        val binding: ItemNewsBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_news, parent, false)
         return CardViewHolder(binding)
     }
 
@@ -40,5 +43,6 @@ class NewsAdapter : ListAdapter<Article, NewsAdapter.CardViewHolder>(ArticleDiff
         val article = getItem(position)
         val b = holder.binding
         b.articleObject = article
+        Glide.with(b.root).load(article.urlToImage).into(b.imageView)
     }
 }

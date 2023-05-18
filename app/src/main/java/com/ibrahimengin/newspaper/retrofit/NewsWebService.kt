@@ -11,6 +11,8 @@ interface NewsWebService {
     suspend fun getNews(
         @Query("country")
         countryCode: String = "us",
+        @Query("page")
+        page: Int,
         @Query("apiKey")
         apiKey: String = API_KEY //interceptor ile yapılabilir
     ): NewsResponse

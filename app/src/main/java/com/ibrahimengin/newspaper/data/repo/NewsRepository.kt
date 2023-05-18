@@ -7,9 +7,9 @@ import kotlinx.coroutines.withContext
 
 class NewsRepository(var newsWebService: NewsWebService) {
 
-    suspend fun getAllNews() : List<Article> {
+    suspend fun getAllNews(pageNumber: Int) : List<Article> {
         return withContext(Dispatchers.IO) {
-            newsWebService.getNews().articles
+            newsWebService.getNews(page = pageNumber).articles
         }
     }
 }
