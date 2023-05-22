@@ -1,6 +1,6 @@
 package com.ibrahimengin.newspaper.data.entity
 
-import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Article(
     val author: String?,
@@ -10,4 +10,4 @@ data class Article(
     val title: String,
     val url: String,
     val urlToImage: String
-)
+) : Serializable

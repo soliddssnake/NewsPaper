@@ -19,5 +19,9 @@
         android:id="@+id/detailFragment"
         android:name="com.ibrahimengin.newspaper.ui.fragments.DetailFragment"
         android:label="DetailFragment"
-        tools:layout="@layout/fragment_detail"/>
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="article"
+            app:argType="com.ibrahimengin.newspaper.data.entity.Article" />
+    </fragment>
 </navigation>

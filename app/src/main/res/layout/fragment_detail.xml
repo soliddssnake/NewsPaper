@@ -7,6 +7,10 @@
         <variable
             name="detailFragment"
             type="com.ibrahimengin.newspaper.ui.fragments.DetailFragment" />
+        <variable
+            name="detailToolBarTitle"
+            type="String" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,14 +19,28 @@
         tools:context=".ui.fragments.DetailFragment">
 
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/detailToolBar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Detail Page"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@{detailToolBarTitle}"
+            app:titleTextColor="#FFFFFF"/>
+
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/detailToolBar">
+
+        </WebView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
