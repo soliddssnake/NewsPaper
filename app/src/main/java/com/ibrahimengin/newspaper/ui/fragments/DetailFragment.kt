@@ -25,12 +25,11 @@ class DetailFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
         binding.detailFragment = this
 
-        val receivedArticle = args.article
         binding.webView.apply {
             webViewClient = WebViewClient()
-            loadUrl(receivedArticle.url)
+            loadUrl(args.url)
         }
-        binding.detailToolBarTitle = receivedArticle.title
+        binding.detailToolBarTitle = args.title
 
         return binding.root
     }

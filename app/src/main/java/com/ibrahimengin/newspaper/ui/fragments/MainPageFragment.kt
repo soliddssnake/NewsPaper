@@ -8,6 +8,7 @@ import android.widget.AbsListView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ibrahimengin.newspaper.R
@@ -21,7 +22,12 @@ class MainPageFragment : Fragment() {
 
     private lateinit var binding: FragmentMainPageBinding
     private val viewModel: MainPageViewModel by viewModels()
-    private val adapter: NewsAdapter = NewsAdapter()
+    private val adapter: NewsAdapter = NewsAdapter { article ->
+        val pass = MainPageFragmentDirections.actionMainPageFragmentToDetailFragment(
+            article.url, article.title
+        )
+        findNavController().navigate(pass)
+    }
     private var isLastPage = false
     private var isScrolling = false
 
@@ -40,29 +46,17 @@ class MainPageFragment : Fragment() {
             val totalPages = it.size
             isLastPage = viewModel.pageNumber == totalPages
             if (isLastPage) {
-                hideProgress()
+                binding.isLoading = false
             }
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading) {
-                showProgress()
-            } else {
-                hideProgress()
-            }
+            binding.isLoading = isLoading
         }
 
 
 
         return binding.root
-    }
-
-    private fun showProgress() {
-        binding.progressBar.visibility = View.VISIBLE
-    }
-
-    private fun hideProgress() {
-        binding.progressBar.visibility = View.GONE
     }
 
     private fun setupRecyclerScrollListener() {

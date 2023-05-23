@@ -3,7 +3,6 @@ package com.ibrahimengin.newspaper.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,9 +10,9 @@ import com.bumptech.glide.Glide
 import com.ibrahimengin.newspaper.R
 import com.ibrahimengin.newspaper.data.entity.Article
 import com.ibrahimengin.newspaper.databinding.ItemNewsBinding
-import com.ibrahimengin.newspaper.ui.fragments.MainPageFragmentDirections
 
-class NewsAdapter : ListAdapter<Article, NewsAdapter.CardViewHolder>(ArticleDiffUtil()) {
+class NewsAdapter(private val onArticleClick: (article: Article) -> Unit) :
+    ListAdapter<Article, NewsAdapter.CardViewHolder>(ArticleDiffUtil()) {
 
     inner class CardViewHolder(binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
         var binding: ItemNewsBinding
@@ -46,8 +45,7 @@ class NewsAdapter : ListAdapter<Article, NewsAdapter.CardViewHolder>(ArticleDiff
         b.articleObject = article
         Glide.with(b.root).load(article.urlToImage).into(b.imageView)
         b.itemRow.setOnClickListener {
-            val pass = MainPageFragmentDirections.actionMainPageFragmentToDetailFragment(article)
-            Navigation.findNavController(it).navigate(pass)
+            onArticleClick(article)
         }
     }
 }

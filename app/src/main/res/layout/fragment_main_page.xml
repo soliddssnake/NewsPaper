@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
+
         <variable
             name="mainPageFragment"
             type="com.ibrahimengin.newspaper.ui.fragments.MainPageFragment" />
@@ -13,6 +15,9 @@
         <variable
             name="newsAdapter"
             type="com.ibrahimengin.newspaper.ui.adapters.NewsAdapter" />
+        <variable
+            name="isLoading"
+            type="boolean" />
 
     </data>
 
@@ -51,7 +56,7 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="@{isLoading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

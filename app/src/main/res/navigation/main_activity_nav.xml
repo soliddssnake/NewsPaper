@@ -21,7 +21,10 @@
         android:label="DetailFragment"
         tools:layout="@layout/fragment_detail">
         <argument
-            android:name="article"
-            app:argType="com.ibrahimengin.newspaper.data.entity.Article" />
+            android:name="url"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
     </fragment>
 </navigation>
